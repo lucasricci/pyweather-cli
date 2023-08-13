@@ -1,10 +1,20 @@
 A simple Weather CLI app written using Python
 
-# Dependencies
-`pip install requests unidecode`
+# Installation
+Clone to your desktop or document folder:
+```
+git clone https://github.com/lucasricci/pyweather-cli.git
+```
 
-# Install
-Download both `pyweather.py` and `list.txt`. Put them in the same folder and run it with `python pyweather.py`
+Install requirements:
+```
+python -m pip install -r requirements.txt
+```
+
+Run it:
+```
+python pyweather.py
+````
 
 # Output
 ~~~shell
@@ -20,3 +30,5 @@ Weather: Broken Clouds
 Humidity: 90%
 ========================================
 ~~~
+
+> Pyweather supports about 43k cities, if you live in a smaller city it may not be included in our database. In that case try a close and bigger city. Sorry for the incovinience
