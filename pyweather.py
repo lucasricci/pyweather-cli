@@ -1,37 +1,37 @@
-# Many thanks to https://simplemaps.com/data/world-cities
-
+"""Make requests and remove non-ASCII characters"""
 import requests
 from unidecode import unidecode
 
 
-def divisionLine(n):
-    print("=" * n)
+def division_line(repetitions):
+    """Function to print lines"""
+    print("=" * repetitions)
 
 
 cities = []
-with open('list.txt') as f:
+with open('list.txt', encoding="utf-8") as f:
     lines = f.readlines()
     for line in lines:
-        cities.append(line.strip().replace("\n",""))
+        cities.append(line.strip().replace("\n", ""))
 
 
 while True:
     city = unidecode(input("City: ").title())
     if city in cities:
         break
-    else:
-        continue
 
-api_key = "b0c459ecb088b162b63f90fabf2f6574"
-coord = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
+API = "b0c459ecb088b162b63f90fabf2f6574"
+coord = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API}"
 
-geocoord = requests.get(coord)
+geocoord = requests.get(coord, timeout=5)
 coordData = geocoord.json()
-unit = input("Unit (Metric, Imperial, Standart [Kelvin]): ").lower()
+u = input("Unit (Metric, Imperial, Standart [Kelvin]): ").lower()
 
-url = f"https://api.openweathermap.org/data/2.5/weather?lat={coordData['coord']['lat']}&lon={coordData['coord']['lon']}&units={unit}&appid={api_key}"
+lat = coordData['coord']['lat']
+lon = coordData['coord']['lon']
+url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units={u}&appid={API}"
 
-response = requests.get(url)
+response = requests.get(url, timeout=5)
 data = response.json()
 
 temperature = data['main']['temp']
@@ -41,19 +41,17 @@ tempMin = data['main']['temp_min']
 weather = data['weather'][0]['description']
 humidity = data['main']['humidity']
 
-if unit == "metric":
-    measurementUnit = "ºC"
-elif unit == "imperial":
-    measurementUnit = "ºF"
+if u == "metric":
+    MEASUREMENT_UNIT = "ºC"
+elif u == "imperial":
+    MEASUREMENT_UNIT = "ºF"
 else:
-    measurementUnit = "K"
+    MEASUREMENT_UNIT = "K"
 
-divisionLine(40)
+division_line(40)
 print(f'City: {city}')
-print(f'Temperature: {round(temperature)}{measurementUnit}')
-print(f'Feels Like: {round(feelsLike)}{measurementUnit}')
+print(f'Temperature: {round(temperature)}{MEASUREMENT_UNIT}')
+print(f'Feels Like: {round(feelsLike)}{MEASUREMENT_UNIT}')
 print(f'Weather: {weather.title()}')
 print(f'Humidity: {humidity}%')
-divisionLine(40)
-
-# print(f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units={unit}&appid={api_key}")
+division_line(40)
