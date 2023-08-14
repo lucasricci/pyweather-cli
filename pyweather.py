@@ -20,7 +20,7 @@ while True:
     if city in cities:
         break
 
-API = "b0c459ecb088b162b63f90fabf2f6574"
+API = ""
 coord = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API}"
 
 geocoord = requests.get(coord, timeout=5)
